@@ -1,4 +1,3 @@
-#
 from dataclasses import dataclass
 import json
 import os
@@ -6,8 +5,8 @@ from document import chunk_policy_html
 
 @dataclass
 class config:
-    input_dir: str = "../output/policy_html/"
-    output_dir: str = "../output/policy_json/"
+    input_dir: str = "/policy_html/"
+    output_dir: str = "/policy_json/"
 
 
 def process_one(html_path, out_dir):
@@ -16,7 +15,7 @@ def process_one(html_path, out_dir):
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
-def main():
+def chunk_policy():
 
     if not os.path.exists(config.output_dir):
         os.makedirs(config.output_dir)
@@ -30,7 +29,3 @@ def main():
         process_one(config.input_dir + path, config.output_dir)
 
     print(f"\n{len(paths)} document(s) processed")
-
-
-if __name__ == "__main__":
-    main()
