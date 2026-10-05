@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from time import sleep
+from time import sleep, localtime
 import pathlib
 
 from scraper import scrape
@@ -36,13 +36,19 @@ def store_hash(hash:str, working_dir: str, hash_storage_fname: str):
 
 def run_embed_pipeline(working_dir: str, already_scraped: bool, hash_storage_fname):
 
-    if not already_scraped:
-         scrape.scrape_policy(working_dir)
+    print(f"[{localtime}]: Build pipeline beginning")
 
+    if not already_scraped:
+        print(f"[{localtime}]: Scraping policy.")
+        scrape.scrape_policy(working_dir)
+
+    print(f"[{localtime}]: Stored hash at '{hash_storage_fname}'.")
     store_hash(hash.hash_dir(working_dir), working_dir, hash_storage_fname)
 
+    print(f"[{localtime}]: Chunking policy.")
     chunk.chunk_policy(working_dir)
 
+    print(f"[{localtime}]: Embedding policy.")
     embed.embed_policy(working_dir)
 
 
@@ -52,16 +58,20 @@ def main():
 
         stored_hash = get_stored_hash(config.working_dir, config.hash_storage_fname)
 
-        print(f"current hash: {hash}")
+        print(f"Found hash: {hash}")
 
         if hash is None:
+            print(f"[{localtime}]: Hash not found, triggering build pipeline.")
             run_embed_pipeline(config.working_dir, False, config.hash_storage_fname)
         else:
 
-            scrape(config.working_dir)
-            new_hash = generate_hash(config.working_dir)
+            print(f"[{localtime}]: Found hash, scraping then generating new hash.")
+            scrape.scrape_policy(config.working_dir)
+            new_hash = hash.hash_dir(config.working_dir)
+
 
             if new_hash != stored_hash:
+                print(f"[{localtime}]: Hash didnt match, triggering build pipeline.")
                 run_embed_pipeline(config.working_dir, True, config.hash_storage_fname)
 
 
