@@ -2,8 +2,8 @@
 from dataclasses import dataclass
 import os
 
-from discover import discover_urls
-from download import download_policies
+from .discover import discover_urls
+from .download import download_policies
 
 @dataclass
 class config:

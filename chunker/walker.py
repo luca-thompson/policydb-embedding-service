@@ -2,9 +2,9 @@ import re
 
 from bs4.element import NavigableString, Tag
 
-from common import SECTION_HEADING_RE, build_citation, is_notice_banner, is_trivial_text
-from lists import render_list
-from tables import serialize_table, serialize_table_rows
+from .common import SECTION_HEADING_RE, build_citation, is_notice_banner, is_trivial_text
+from .lists import render_list
+from .tables import serialize_table, serialize_table_rows
 
 
 class ChunkWalker:

@@ -200,16 +200,16 @@ def batched(iterable):
         yield batch
 
 
-def main():
-    doc_metadata_lookup = load_document_metadata(config.input_dir)
+def embed_policy(working_dir: str):
+    doc_metadata_lookup = load_document_metadata(working_dir + config.input_dir)
 
     print(f"loading embedding model: {config.embedding_model}")
     model = SentenceTransformer(config.embedding_model, device=config.device)
 
-    print(f"opening persistent ChromaDB at: {config.output_dir}")
-    client = chromadb.PersistentClient(path=config.output_dir)
+    print(f"opening persistent ChromaDB at: {working_dir + config.output_dir}")
+    client = chromadb.PersistentClient(path=(working_dir + config.output_dir))
 
-    
+
     # cosine similarity is the standard choice for BGE embeddings
     collection = client.get_or_create_collection(
         name=config.collection_name,
@@ -219,7 +219,7 @@ def main():
     records = list(load_chunks(
         config.input_dir,
     ))
-    
+
     if not records:
         print("no chunks to embed, exiting.")
         return
@@ -242,7 +242,7 @@ def main():
             embed_text, n_tokens, was_truncated = make_embedding_text(
                 record, model.tokenizer, max_len,
             )
-            
+
             if was_truncated:
                 n_truncated += 1
                 print(f"[warn] chunk {base_id!r} has {n_tokens} tokens > "

@@ -1,9 +1,9 @@
-from common import build_citation
-from definitions_splitter import split_definitions
-from html_loader import extract_doc_title, extract_policy_id, load_soup
-from tables import extract_key_info_metadata
-from validation import validate
-from walker import ChunkWalker
+from .common import build_citation
+from .definitions_splitter import split_definitions
+from .html_loader import extract_doc_title, extract_policy_id, load_soup
+from .tables import extract_key_info_metadata
+from .validation import validate
+from .walker import ChunkWalker
 
 
 def chunk_policy_html(html_path, manifest_lookup=None):

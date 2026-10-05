@@ -5,7 +5,7 @@ import pathlib
 from scraper import scrape
 from hasher import hash
 from chunker import chunk
-import embedder
+from embedder import embed
 
 @dataclass
 class config:
@@ -33,29 +33,17 @@ def store_hash(hash:str, working_dir: str, hash_storage_fname: str):
         print("IO error: couldnt write to hash file")
         quit()
 
-def generate_hash(working_dir: str):
-    return hash.hash_dir(working_dir)
-
-def scrape(working_dir: str):
-    scrape.scrape_policy(working_dir)
-
-def chunk(working_dir: str):
-    chunk.chunk_policy(working_dir)
-
-def embed(working_dir: str):
-    embed.embed_policy(working_dir)
-
 
 def run_embed_pipeline(working_dir: str, already_scraped: bool, hash_storage_fname):
 
     if not already_scraped:
-         scrape(working_dir)
+         scrape.scrape_policy(working_dir)
 
-    store_hash(generate_hash(working_dir), working_dir, hash_storage_fname)
+    store_hash(hash.hash_dir(working_dir), working_dir, hash_storage_fname)
 
-    chunk(working_dir)
+    chunk.chunk_policy(working_dir)
 
-    embed(working_dir)
+    embed.embed_policy(working_dir)
 
 
 def main():
