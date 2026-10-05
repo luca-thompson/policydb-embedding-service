@@ -25,6 +25,7 @@ def fetch_policy(
     doc_id: str,
     url: str,
     out_dir: str,
+    working_dir: str,
     is_protected: bool = False,
 ):
     record = {

@@ -1,4 +1,4 @@
-
+import requests
 from dataclasses import dataclass
 import os
 
@@ -28,7 +28,7 @@ def resolve_targets(session):
     return items
 
 
-def scrape_policy(working_dir):
+def scrape_policy(working_dir: str):
     os.makedirs(working_dir + config.out_dir, exist_ok=True)
 
     session = requests.Session()
@@ -36,4 +36,4 @@ def scrape_policy(working_dir):
 
     items = resolve_targets(session)
 
-    download_policies(session, items, config.out_dir, config.delay_min, config.delay_max)
+    download_policies(session, items, working_dir + config.out_dir, config.delay_min, config.delay_max)

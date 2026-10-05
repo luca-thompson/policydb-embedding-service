@@ -20,8 +20,7 @@ def get_stored_hash(working_dir: str, hash_storage_fname: str):
             return f.read()
 
     except IOError:
-        print("IO error: couldnt read from hash storage file")
-        quit()
+        return None
 
 def store_hash(hash:str, working_dir: str, hash_storage_fname: str):
     try:
@@ -54,19 +53,21 @@ def run_embed_pipeline(working_dir: str, already_scraped: bool, hash_storage_fna
 
 def main():
 
+    print(f"[{localtime}]: Starting Embedding Service.")
+
     while True:
 
         stored_hash = get_stored_hash(config.working_dir, config.hash_storage_fname)
 
-        print(f"Found hash: {hash}")
+        print(f"Found hash: {stored_hash}")
 
-        if hash is None:
+        if stored_hash is None:
             print(f"[{localtime}]: Hash not found, triggering build pipeline.")
             run_embed_pipeline(config.working_dir, False, config.hash_storage_fname)
         else:
 
             print(f"[{localtime}]: Found hash, scraping then generating new hash.")
-            scrape.scrape_policy(config.working_dir)
+            #scrape.scrape_policy(config.working_dir)
             new_hash = hash.hash_dir(config.working_dir)
 
 
@@ -76,3 +77,6 @@ def main():
 
 
         sleep(config.sleep)
+
+if __name__ == "__main__":
+    main()

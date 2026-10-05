@@ -10,10 +10,10 @@ import chromadb
 
 @dataclass
 class config:
-    input_dir = "../output/policy_json/"
-    output_dir = "../output/chroma_db/"
+    input_dir = "policy_json/"
+    output_dir = "chroma_db/"
     embedding_model = "BAAI/bge-m3"
-    device = "cuda" #cpu, cuda etc.
+    device = "cpu" #cpu, cuda etc.
     collection_name = "policydb"
     batch_size = 32
 
@@ -217,7 +217,7 @@ def embed_policy(working_dir: str):
     )
 
     records = list(load_chunks(
-        config.input_dir,
+        working_dir + config.input_dir,
     ))
 
     if not records:
@@ -272,7 +272,3 @@ def embed_policy(working_dir: str):
 
     print(f"{n_truncated} chunk(s) exceeded max_seq_length={max_len} "
           f"and were truncated.")
-
-
-if __name__ == "__main__":
-    main()
