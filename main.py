@@ -76,7 +76,7 @@ def main():
                 print(f"[{str(datetime.datetime.now())}]: Hash didnt match, triggering build pipeline.")
                 run_embed_pipeline(config.working_dir, True, config.hash_storage_fname)
 
-
+        print(f"[{str(datetime.datetime.now())}]: Sleeping for {config.sleep} seconds.")
         sleep(config.sleep)
 
 if __name__ == "__main__":
