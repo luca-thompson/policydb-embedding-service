@@ -67,7 +67,7 @@ def main():
         else:
 
             print(f"[{localtime}]: Found hash, scraping then generating new hash.")
-            #scrape.scrape_policy(config.working_dir)
+            scrape.scrape_policy(config.working_dir)
             new_hash = hash.hash_dir(config.working_dir)
 
 
