@@ -22,7 +22,7 @@ python main.py
 ### Configuration
 Each configurable part of the service has a config dataclass at the top of its file. For example, to change time between corpus re-checks for the main service edit the "sleep" parameter.
 
-###Components
+### Components
 
 **Scraper**
 This components role is to go to the 'browse' page of Latrobe's policy website and download all policy documents it can find there.
