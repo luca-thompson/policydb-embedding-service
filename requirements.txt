@@ -1,0 +1,6 @@
+requests
+tqdm
+torch
+sentence-transformers
+chromadb
+bs4
